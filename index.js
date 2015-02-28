@@ -26,7 +26,7 @@ function _deregisterInstance(cb) {
     if (err) { return cb(err); }
     _waitForDeregistration(cb);
   });
-
+}
 
 function _isInstanceIdInArray(instances, instanceId) {
   if (instances && instances.length > 0) {
