@@ -13,7 +13,7 @@ It will then wait for a SIGINT or SIGTERM signal, at which point it will deregis
 ### Docker Image Size
 
 ```
-wonderlic/elb-presence:latest  - ? MB
+wonderlic/elb-presence:latest  - 29.1 MB
 ```
 
 ### Usage
@@ -29,3 +29,28 @@ docker run \
 ```
 
 INSTANCE_ID is optional.  If not supplied, the code will attempt to look up the instance-id of the Amazon EC2 instance that it is running on using the local meta-data service.
+
+### Example IAM Policy
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "elasticloadbalancing:DescribeLoadBalancers",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "elasticloadbalancing:DeregisterInstancesFromLoadBalancer",
+        "elasticloadbalancing:RegisterInstancesWithLoadBalancer"
+      ],
+      "Resource": "arn:aws:elasticloadbalancing:[REGION]:[ACCOUNT]:loadbalancer/[ELB_NAME]"
+    }
+  ]
+}
+```
+
+Replace [REGION], [ACCOUNT], and [ELB_NAME] with the appropriate values for your environment.
